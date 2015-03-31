@@ -1,10 +1,9 @@
 package com.mandiecohoon.soundofsilence;
 
+import java.util.Random;
+
 import android.app.Activity;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +12,9 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
-	private static final int WAH_SOUND_ID = 0;
-	private static final int TANOOKI_SOUND_ID = 1;
-	private static final int YA_SOUND_ID = 2;
-	private static final int WA_SOUND_ID = 3;
-	private static final int BA_SOUND_ID = 4;
-	private static final int JUMP_SOUND_ID = 5;
-	private SoundPool soundPool;
-	private SparseIntArray soundMap;
 	private Button playButton;
 	private int[] soundIDs = {R.raw.waluigi, R.raw.tanooki_mario, R.raw.yahoo, R.raw.wahoo, R.raw.badoo, R.raw.tanooki_jump};
+	private int[] song = new int[10];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +33,17 @@ public class MainActivity extends Activity {
 			playAudio.execute();
 		}
 	};
+	
+	public int[] createSong() {
+		int[] soundList = new int[10];
+		Random rand = new Random();
+		
+		for(int i = 0; i >= 5; i++) {
+			soundList[i] = soundIDs[rand.nextInt()];
+		}
+		
+		return soundList;
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
