@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sound Of Silence</string>
+    <string name="action_settings">Settings</string>
+    <string name="toggle_1">HERE</string>
+    <string name="toggle_2">HERE</string>
+    <string name="toggle_3">HERE</string>
+    <string name="toggle_4">HERE</string>
+    <string name="toggle_5">HERE</string>
+    <string name="toggle_6">HERE</string>
+    <string name="button_play">Play</string>
+    <string name="timer">1:00</string>
+    
+</resources>
