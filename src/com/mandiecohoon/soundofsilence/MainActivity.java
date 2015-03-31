@@ -14,23 +14,21 @@ import android.widget.Button;
 public class MainActivity extends Activity {
 	
 	private static final int WAH_SOUND_ID = 0;
-	private static final int CANNON_SOUND_ID = 1;
-	private static final int BLOCKER_SOUND_ID = 2;
+	private static final int TANOOKI_SOUND_ID = 1;
+	private static final int YA_SOUND_ID = 2;
+	private static final int WA_SOUND_ID = 3;
+	private static final int BA_SOUND_ID = 4;
+	private static final int JUMP_SOUND_ID = 5;
 	private SoundPool soundPool;
 	private SparseIntArray soundMap;
 	private Button playButton;
+	private int[] soundIDs = {R.raw.waluigi, R.raw.tanooki_mario, R.raw.yahoo, R.raw.wahoo, R.raw.badoo, R.raw.tanooki_jump};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-		soundMap = new SparseIntArray(3);
-		soundMap.put(WAH_SOUND_ID, soundPool.load(getBaseContext(), R.raw.waluigi, 1));
-		//soundMap.put(CANNON_SOUND_ID, soundPool.load(context, R.raw.cannon_fire, 1));
-		//soundMap.put(BLOCKER_SOUND_ID, soundPool.load(context, R.raw.blocker_hit, 1));
-		
+
 		playButton = (Button) findViewById(R.id.play);
 		playButton.setOnClickListener(playButtonListener);
 
@@ -39,8 +37,8 @@ public class MainActivity extends Activity {
 	 public OnClickListener playButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
+			PlayMedia playAudio = new PlayMedia(getBaseContext(),soundIDs);
+			playAudio.execute();
 		}
 	};
 	
