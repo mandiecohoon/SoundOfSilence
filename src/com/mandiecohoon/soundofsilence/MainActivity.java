@@ -20,29 +20,34 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		song = createSong(3);
+		
 		playButton = (Button) findViewById(R.id.play);
 		playButton.setOnClickListener(playButtonListener);
-
+		
 	}
 	
 	 public OnClickListener playButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			PlayMedia playAudio = new PlayMedia(getBaseContext(),soundIDs);
+			PlayMedia playAudio = new PlayMedia(getBaseContext(), song);
 			playAudio.execute();
 		}
 	};
 	
-	public int[] createSong() {
-		int[] soundList = new int[10];
+	public int[] createSong(int numberOfSounds) {
+		int[] soundList = new int[numberOfSounds];
 		Random rand = new Random();
 		
-		for(int i = 0; i >= 5; i++) {
-			soundList[i] = soundIDs[rand.nextInt()];
+		for(int i = 0; i <= numberOfSounds; i++) {
+			soundList[i] = soundIDs[rand.nextInt(5)];
 		}
 		
 		return soundList;
+	}
+	
+	public void checkAnswer() {
+		
 	}
 	
 	@Override
