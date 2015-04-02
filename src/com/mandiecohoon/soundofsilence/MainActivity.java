@@ -134,7 +134,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(1), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row1_2));
 			showCurrentGuess();
 		}
 	};
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(2), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row1_3));
 			showCurrentGuess();
 		}
 	};
@@ -150,7 +150,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(3), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row1_4));
 			showCurrentGuess();
 		}
 	};
@@ -160,7 +160,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(4), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row2_1));
 			showCurrentGuess();
 		}
 	};
@@ -168,7 +168,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(5), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row2_2));
 			showCurrentGuess();
 		}
 	};
@@ -176,7 +176,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(6), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row2_3));
 			showCurrentGuess();
 		}
 	};
@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(7), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row2_4));
 			showCurrentGuess();
 		}
 	};
@@ -194,7 +194,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(8), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row3_1));
 			showCurrentGuess();
 		}
 	};
@@ -202,7 +202,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(9), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row3_2));
 			showCurrentGuess();
 		}
 	};
@@ -210,7 +210,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(10), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row3_3));
 			showCurrentGuess();
 		}
 	};
@@ -218,7 +218,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(11), 1, 1, 1, 0, 1f);
-			guessList.add(getResources().getString(R.string.toggle_row1_1));
+			guessList.add(getResources().getString(R.string.toggle_row3_4));
 			showCurrentGuess();
 		}
 	};
