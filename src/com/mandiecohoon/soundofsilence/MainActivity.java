@@ -42,18 +42,18 @@ public class MainActivity extends Activity {
 	private int[] song = new int[10];
 	
 	// Sound buttons
-	private Button button11;
-	private Button button12;
-	private Button button13;
-	private Button button14;
-	private Button button21;
-	private Button button22;
-	private Button button23;
-	private Button button24;
-	private Button button31;
-	private Button button32;
-	private Button button33;
-	private Button button34;
+	private static Button button11;
+	private static Button button12;
+	private static Button button13;
+	private static Button button14;
+	private static Button button21;
+	private static Button button22;
+	private static Button button23;
+	private static Button button24;
+	private static Button button31;
+	private static Button button32;
+	private static Button button33;
+	private static Button button34;
 	// Sounds
 	private SoundPool soundPool;
 	private SparseIntArray soundMap;
@@ -115,6 +115,7 @@ public class MainActivity extends Activity {
 	 public OnClickListener playButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			disableButtons();
 			PlayMedia playAudio = new PlayMedia(getBaseContext(), song);
 			playAudio.execute();
 		}
@@ -246,6 +247,36 @@ public class MainActivity extends Activity {
 			guessedText = guessedText + ", ";
 		}
 		guessText.setText(guessedText);
+	}
+	
+	public void disableButtons() {
+		button11.setEnabled(false);
+		button12.setEnabled(false);
+		button13.setEnabled(false);
+		button14.setEnabled(false);
+		button21.setEnabled(false);
+		button22.setEnabled(false);
+		button23.setEnabled(false);
+		button24.setEnabled(false);
+		button31.setEnabled(false);
+		button32.setEnabled(false);
+		button33.setEnabled(false);
+		button34.setEnabled(false);
+	}
+	
+	public static void enableButtons() {
+		button11.setEnabled(true);
+		button12.setEnabled(true);
+		button13.setEnabled(true);
+		button14.setEnabled(true);
+		button21.setEnabled(true);
+		button22.setEnabled(true);
+		button23.setEnabled(true);
+		button24.setEnabled(true);
+		button31.setEnabled(true);
+		button32.setEnabled(true);
+		button33.setEnabled(true);
+		button34.setEnabled(true);
 	}
 	
 	@Override

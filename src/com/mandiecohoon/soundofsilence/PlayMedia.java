@@ -23,8 +23,14 @@ public class PlayMedia extends AsyncTask<Void, Void, Void> {
         this.soundIDs=soundIDs;
         mediaPlayer = MediaPlayer.create(context,soundIDs[0]);
         setNextMediaForMediaPlayer(mediaPlayer);
+        /*
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                //MainActivity.enableButtons();
+            }
+        });
+        */
     }
-
     public void setNextMediaForMediaPlayer(MediaPlayer player){
         player.setOnCompletionListener(new OnCompletionListener() {         
             public void onCompletion(MediaPlayer mp) {
@@ -34,7 +40,9 @@ public class PlayMedia extends AsyncTask<Void, Void, Void> {
                     setNextMediaForMediaPlayer(mp);
                     mp.start();
                     idx+=1;
-                }               
+                } else if(soundIDs.length<=idx) {
+                	MainActivity.enableButtons();
+                }           
             }
         });
     }
@@ -53,4 +61,5 @@ public class PlayMedia extends AsyncTask<Void, Void, Void> {
 
         return null;
     }
+ 
 }
