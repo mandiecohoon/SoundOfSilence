@@ -33,10 +33,10 @@ public class MainActivity extends Activity {
 			R.raw.air_wrench,
 			R.raw.teaspoon,
 			R.raw.dove,
-			R.raw.duck,
-			R.raw.hawk,
-			R.raw.mac_startup,
-			R.raw.glass_break
+			R.raw.duck
+			//R.raw.hawk,
+			//R.raw.mac_startup,
+			//R.raw.glass_break
 	};
 	private int numberOfSoundIDs = soundIDs.length;
 	private int[] song = new int[10];
@@ -59,8 +59,10 @@ public class MainActivity extends Activity {
 	private SparseIntArray soundMap;
 	
 	// Answer
-	private ArrayList<String> answer = new ArrayList();
+	private int[] answer = new int[12];
+	private int[] guessAnswer = new int[12];
 	private ArrayList<String> guessList = new ArrayList();
+	int guessIndex = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		// Create song
-		song = createSong(5);
+		song = createSong(2);
 		
 		// Import UI
 		playButton = (Button) findViewById(R.id.play);
@@ -128,7 +130,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(0), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row1_1));
-			showCurrentGuess();
+			showCurrentGuess(1);
 		}
 	};
 	public OnClickListener button12Listener = new OnClickListener() {
@@ -136,7 +138,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(1), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row1_2));
-			showCurrentGuess();
+			showCurrentGuess(2);
 		}
 	};
 	public OnClickListener button13Listener = new OnClickListener() {
@@ -144,7 +146,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(2), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row1_3));
-			showCurrentGuess();
+			showCurrentGuess(3);
 		}
 	};
 	public OnClickListener button14Listener = new OnClickListener() {
@@ -152,7 +154,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(3), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row1_4));
-			showCurrentGuess();
+			showCurrentGuess(4);
 		}
 	};
 	
@@ -162,7 +164,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(4), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row2_1));
-			showCurrentGuess();
+			showCurrentGuess(5);
 		}
 	};
 	public OnClickListener button22Listener = new OnClickListener() {
@@ -170,7 +172,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(5), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row2_2));
-			showCurrentGuess();
+			showCurrentGuess(6);
 		}
 	};
 	public OnClickListener button23Listener = new OnClickListener() {
@@ -178,7 +180,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(6), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row2_3));
-			showCurrentGuess();
+			showCurrentGuess(7);
 		}
 	};
 	public OnClickListener button24Listener = new OnClickListener() {
@@ -186,7 +188,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(7), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row2_4));
-			showCurrentGuess();
+			showCurrentGuess(8);
 		}
 	};
 	
@@ -196,7 +198,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(8), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row3_1));
-			showCurrentGuess();
+			showCurrentGuess(9);
 		}
 	};
 	public OnClickListener button32Listener = new OnClickListener() {
@@ -204,7 +206,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(9), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row3_2));
-			showCurrentGuess();
+			showCurrentGuess(10);
 		}
 	};
 	public OnClickListener button33Listener = new OnClickListener() {
@@ -212,7 +214,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(10), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row3_3));
-			showCurrentGuess();
+			showCurrentGuess(11);
 		}
 	};
 	public OnClickListener button34Listener = new OnClickListener() {
@@ -220,33 +222,44 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			soundPool.play(soundMap.get(11), 1, 1, 1, 0, 1f);
 			guessList.add(getResources().getString(R.string.toggle_row3_4));
-			showCurrentGuess();
+			showCurrentGuess(12);
 		}
 	};
 	
 	
 	public int[] createSong(int numberOfSounds) {
 		int[] soundList = new int[numberOfSounds + 1];
-		Random rand = new Random();
+		Random random = new Random();
 		
 		for(int i = 0; i <= numberOfSounds; i++) {
-			soundList[i] = soundIDs[rand.nextInt(numberOfSoundIDs - 1)];
+			int randomNumber = random.nextInt(numberOfSoundIDs - 1);
+			soundList[i] = soundIDs[randomNumber];
+			answer[i] = randomNumber;
 		}
 		
 		return soundList;
 	}
 	
 	public void checkAnswer() {
-		
+		if(answer == guessAnswer) {
+			guessText.setText("it worked?");
+		}
 	}
 	
-	public void showCurrentGuess() {
+	public void showCurrentGuess(int soundGuessed) {
 		String guessedText = "";
+		guessIndex++;
 		for(String guess : guessList) {
 			guessedText = guessedText + guess;
 			guessedText = guessedText + ", ";
 		}
 		guessText.setText(guessedText);
+		guessAnswer[guessIndex] = soundGuessed;
+		checkAnswer();
+	}
+	
+	public void addLevel() {
+		
 	}
 	
 	public void disableButtons() {
