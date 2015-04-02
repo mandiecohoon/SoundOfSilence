@@ -26,10 +26,23 @@ public final class R {
     }
     public static final class id {
         public static final int GridLayout=0x7f090000;
-        public static final int action_settings=0x7f090004;
-        public static final int play=0x7f090003;
+        public static final int action_settings=0x7f090011;
+        public static final int guessText=0x7f090003;
+        public static final int play=0x7f090004;
         public static final int songProgress=0x7f090002;
         public static final int songProgressTime=0x7f090001;
+        public static final int toggleButton_row1_1=0x7f090005;
+        public static final int toggleButton_row1_2=0x7f090006;
+        public static final int toggleButton_row1_3=0x7f090007;
+        public static final int toggleButton_row1_4=0x7f090008;
+        public static final int toggleButton_row2_1=0x7f090009;
+        public static final int toggleButton_row2_2=0x7f09000a;
+        public static final int toggleButton_row2_3=0x7f09000b;
+        public static final int toggleButton_row2_4=0x7f09000c;
+        public static final int toggleButton_row3_1=0x7f09000d;
+        public static final int toggleButton_row3_2=0x7f09000e;
+        public static final int toggleButton_row3_3=0x7f09000f;
+        public static final int toggleButton_row3_4=0x7f090010;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -38,24 +51,46 @@ public final class R {
         public static final int main=0x7f080000;
     }
     public static final class raw {
-        public static final int badoo=0x7f040000;
-        public static final int tanooki_jump=0x7f040001;
-        public static final int tanooki_mario=0x7f040002;
-        public static final int wahoo=0x7f040003;
-        public static final int waluigi=0x7f040004;
-        public static final int yahoo=0x7f040005;
+        public static final int air_wrench=0x7f040000;
+        public static final int badoo=0x7f040001;
+        public static final int blop=0x7f040002;
+        public static final int cat_meow=0x7f040003;
+        public static final int dove=0x7f040004;
+        public static final int duck=0x7f040005;
+        public static final int glass_break=0x7f040006;
+        public static final int hawk=0x7f040007;
+        public static final int mac_startup=0x7f040008;
+        public static final int pindrop=0x7f040009;
+        public static final int poolshoot=0x7f04000a;
+        public static final int ship_bell=0x7f04000b;
+        public static final int shotgunreload=0x7f04000c;
+        public static final int slap=0x7f04000d;
+        public static final int tanooki_jump=0x7f04000e;
+        public static final int tanooki_mario=0x7f04000f;
+        public static final int teaspoon=0x7f040010;
+        public static final int turkey_gobble=0x7f040011;
+        public static final int wahoo=0x7f040012;
+        public static final int waluigi=0x7f040013;
+        public static final int yahoo=0x7f040014;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int button_play=0x7f060008;
-        public static final int timer=0x7f060009;
-        public static final int toggle_1=0x7f060002;
-        public static final int toggle_2=0x7f060003;
-        public static final int toggle_3=0x7f060004;
-        public static final int toggle_4=0x7f060005;
-        public static final int toggle_5=0x7f060006;
-        public static final int toggle_6=0x7f060007;
+        public static final int button_play=0x7f06000e;
+        public static final int guess_text=0x7f060010;
+        public static final int timer=0x7f06000f;
+        public static final int toggle_row1_1=0x7f060002;
+        public static final int toggle_row1_2=0x7f060003;
+        public static final int toggle_row1_3=0x7f060004;
+        public static final int toggle_row1_4=0x7f060005;
+        public static final int toggle_row2_1=0x7f060006;
+        public static final int toggle_row2_2=0x7f060007;
+        public static final int toggle_row2_3=0x7f060008;
+        public static final int toggle_row2_4=0x7f060009;
+        public static final int toggle_row3_1=0x7f06000a;
+        public static final int toggle_row3_2=0x7f06000b;
+        public static final int toggle_row3_3=0x7f06000c;
+        public static final int toggle_row3_4=0x7f06000d;
     }
     public static final class style {
         /** 
