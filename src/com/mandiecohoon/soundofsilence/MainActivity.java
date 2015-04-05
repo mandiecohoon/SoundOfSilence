@@ -18,7 +18,9 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	// Import buttons
 	private Button playButton;
+	private Button clearGuess;
 	private TextView guessText;
+	private TextView test;
 	
 	// Array of sounds MUST BE IN ORDER OF BUTTONS
 	private int[] soundIDs = {
@@ -68,15 +70,18 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		test = (TextView) findViewById(R.id.songProgressTime);
 		// Create song
 		song = createSong(2);
-		
+				
 		// Import UI
 		playButton = (Button) findViewById(R.id.play);
 		playButton.setOnClickListener(playButtonListener);
+		clearGuess = (Button) findViewById(R.id.clearGuess);
+		clearGuess.setOnClickListener(clearGuessListener);
 		
 		guessText = (TextView) findViewById(R.id.guessText);
+		
 		
 		// All the sound button choices
 		//row 1
@@ -120,6 +125,13 @@ public class MainActivity extends Activity {
 			disableButtons();
 			PlayMedia playAudio = new PlayMedia(getBaseContext(), song);
 			playAudio.execute();
+		}
+	};
+	
+	public OnClickListener checkAnswerListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			checkAnswer();
 		}
 	};
 	
@@ -230,19 +242,31 @@ public class MainActivity extends Activity {
 	public int[] createSong(int numberOfSounds) {
 		int[] soundList = new int[numberOfSounds + 1];
 		Random random = new Random();
+		String one = "";
 		
 		for(int i = 0; i <= numberOfSounds; i++) {
 			int randomNumber = random.nextInt(numberOfSoundIDs - 1);
 			soundList[i] = soundIDs[randomNumber];
-			answer[i] = randomNumber;
+			answer[i] = randomNumber + 1;
+			one = one + " " + String.valueOf(answer[i]);
 		}
-		
+		test.setText(one);
 		return soundList;
 	}
 	
 	public void checkAnswer() {
-		if(answer == guessAnswer) {
-			guessText.setText("it worked?");
+		boolean flag = true;
+		for(int i = 0; i < answer.length; i++) {
+			if(answer[i] == guessAnswer[i]) {
+				// Answer is correct
+			} else {
+				flag = false;
+			}
+		}
+		
+		if(flag) {
+			test.setText("it worked!");
+			disableButtons();
 		}
 	}
 	
@@ -254,12 +278,19 @@ public class MainActivity extends Activity {
 			guessedText = guessedText + ", ";
 		}
 		guessText.setText(guessedText);
-		guessAnswer[guessIndex] = soundGuessed;
+		guessAnswer[guessIndex - 1] = soundGuessed;
 		checkAnswer();
 	}
 	
 	public void addLevel() {
 		
+	}
+	
+	public void clearGuess() {
+		answer = new int[12];
+		guessAnswer = new int[12];
+		guessList = new ArrayList();
+		guessIndex = 0;
 	}
 	
 	public void disableButtons() {

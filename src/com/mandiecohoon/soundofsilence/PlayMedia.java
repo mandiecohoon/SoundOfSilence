@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class PlayMedia extends AsyncTask<Void, Void, Void> {
-
     private static final String LOG_TAG = PlayMedia.class.getSimpleName();
 
     Context context;
@@ -18,28 +17,23 @@ public class PlayMedia extends AsyncTask<Void, Void, Void> {
     public PlayMedia(MediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
     }
+    
     public PlayMedia(final Context context, final int[] soundIDs) {
         this.context = context;
-        this.soundIDs=soundIDs;
+        this.soundIDs = soundIDs;
         mediaPlayer = MediaPlayer.create(context,soundIDs[0]);
         setNextMediaForMediaPlayer(mediaPlayer);
-        /*
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            public void onCompletion(MediaPlayer mp) {
-                //MainActivity.enableButtons();
-            }
-        });
-        */
     }
-    public void setNextMediaForMediaPlayer(MediaPlayer player){
+    
+    public void setNextMediaForMediaPlayer(MediaPlayer player) {
         player.setOnCompletionListener(new OnCompletionListener() {         
             public void onCompletion(MediaPlayer mp) {
-                if(soundIDs.length>idx){
+                if(soundIDs.length > idx) {
                     mp.release();
                     mp = MediaPlayer.create(context,soundIDs[idx]);
                     setNextMediaForMediaPlayer(mp);
                     mp.start();
-                    idx+=1;
+                    idx += 1;
                 } else if(soundIDs.length<=idx) {
                 	MainActivity.enableButtons();
                 }           
