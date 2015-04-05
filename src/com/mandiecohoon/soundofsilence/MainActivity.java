@@ -82,6 +82,8 @@ public class MainActivity extends Activity {
 		
 		guessText = (TextView) findViewById(R.id.guessText);
 		
+		// Clear data
+		clearGuess();
 		
 		// All the sound button choices
 		//row 1
