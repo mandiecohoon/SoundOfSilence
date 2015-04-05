@@ -87,31 +87,31 @@ public class MainActivity extends Activity {
 		
 		// All the sound button choices
 		//row 1
-		button11 = (Button) findViewById(R.id.toggleButton_row1_1);
+		button11 = (Button) findViewById(R.id.button_row1_1);
 		button11.setOnClickListener(button11Listener);
-		button12 = (Button) findViewById(R.id.toggleButton_row1_2);
+		button12 = (Button) findViewById(R.id.button_row1_2);
 		button12.setOnClickListener(button12Listener);
-		button13 = (Button) findViewById(R.id.toggleButton_row1_3);
+		button13 = (Button) findViewById(R.id.button_row1_3);
 		button13.setOnClickListener(button13Listener);
-		button14 = (Button) findViewById(R.id.toggleButton_row1_4);
+		button14 = (Button) findViewById(R.id.button_row1_4);
 		button14.setOnClickListener(button14Listener);
 		//row 2
-		button21 = (Button) findViewById(R.id.toggleButton_row2_1);
+		button21 = (Button) findViewById(R.id.button_row2_1);
 		button21.setOnClickListener(button21Listener);
-		button22 = (Button) findViewById(R.id.toggleButton_row2_2);
+		button22 = (Button) findViewById(R.id.button_row2_2);
 		button22.setOnClickListener(button22Listener);
-		button23 = (Button) findViewById(R.id.toggleButton_row2_3);
+		button23 = (Button) findViewById(R.id.button_row2_3);
 		button23.setOnClickListener(button23Listener);
-		button24 = (Button) findViewById(R.id.toggleButton_row2_4);
+		button24 = (Button) findViewById(R.id.button_row2_4);
 		button24.setOnClickListener(button24Listener);
 		//row 3
-		button31 = (Button) findViewById(R.id.toggleButton_row3_1);
+		button31 = (Button) findViewById(R.id.button_row3_1);
 		button31.setOnClickListener(button31Listener);
-		button32 = (Button) findViewById(R.id.toggleButton_row3_2);
+		button32 = (Button) findViewById(R.id.button_row3_2);
 		button32.setOnClickListener(button32Listener);
-		button33 = (Button) findViewById(R.id.toggleButton_row3_3);
+		button33 = (Button) findViewById(R.id.button_row3_3);
 		button33.setOnClickListener(button33Listener);
-		button34 = (Button) findViewById(R.id.toggleButton_row3_4);
+		button34 = (Button) findViewById(R.id.button_row3_4);
 		button34.setOnClickListener(button34Listener);
 		
 		 soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
@@ -339,9 +339,7 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 }

@@ -26,21 +26,21 @@ public final class R {
     }
     public static final class id {
         public static final int GridLayout=0x7f090000;
-        public static final int action_settings=0x7f090022;
-        public static final int button1=0x7f090007;
-        public static final int button10=0x7f090012;
-        public static final int button11=0x7f090013;
-        public static final int button12=0x7f090014;
-        public static final int button2=0x7f090008;
-        public static final int button3=0x7f090009;
-        public static final int button4=0x7f09000a;
-        public static final int button5=0x7f09000c;
-        public static final int button6=0x7f09000d;
-        public static final int button7=0x7f09000e;
-        public static final int button8=0x7f09000f;
-        public static final int button9=0x7f090011;
+        public static final int button_row1_1=0x7f090007;
+        public static final int button_row1_2=0x7f090008;
+        public static final int button_row1_3=0x7f090009;
+        public static final int button_row1_4=0x7f09000a;
+        public static final int button_row2_1=0x7f09000c;
+        public static final int button_row2_2=0x7f09000d;
+        public static final int button_row2_3=0x7f09000e;
+        public static final int button_row2_4=0x7f09000f;
+        public static final int button_row3_1=0x7f090011;
+        public static final int button_row3_2=0x7f090012;
+        public static final int button_row3_3=0x7f090013;
+        public static final int button_row3_4=0x7f090014;
         public static final int clearGuess=0x7f090015;
         public static final int guessText=0x7f090003;
+        public static final int newbutton=0x7f090016;
         public static final int play=0x7f090004;
         public static final int songProgress=0x7f090002;
         public static final int songProgressTime=0x7f090001;
@@ -48,18 +48,6 @@ public final class R {
         public static final int tableRow1=0x7f090006;
         public static final int tableRow2=0x7f09000b;
         public static final int tableRow3=0x7f090010;
-        public static final int toggleButton_row1_1=0x7f090016;
-        public static final int toggleButton_row1_2=0x7f090017;
-        public static final int toggleButton_row1_3=0x7f090018;
-        public static final int toggleButton_row1_4=0x7f090019;
-        public static final int toggleButton_row2_1=0x7f09001a;
-        public static final int toggleButton_row2_2=0x7f09001b;
-        public static final int toggleButton_row2_3=0x7f09001c;
-        public static final int toggleButton_row2_4=0x7f09001d;
-        public static final int toggleButton_row3_1=0x7f09001e;
-        public static final int toggleButton_row3_2=0x7f09001f;
-        public static final int toggleButton_row3_3=0x7f090020;
-        public static final int toggleButton_row3_4=0x7f090021;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
