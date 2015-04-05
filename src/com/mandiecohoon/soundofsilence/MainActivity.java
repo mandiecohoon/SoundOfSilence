@@ -128,10 +128,10 @@ public class MainActivity extends Activity {
 		}
 	};
 	
-	public OnClickListener checkAnswerListener = new OnClickListener() {
+	public OnClickListener clearGuessListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			checkAnswer();
+			clearGuess();
 		}
 	};
 	
@@ -291,6 +291,7 @@ public class MainActivity extends Activity {
 		guessAnswer = new int[12];
 		guessList = new ArrayList();
 		guessIndex = 0;
+		guessText.setText("");
 	}
 	
 	public void disableButtons() {
