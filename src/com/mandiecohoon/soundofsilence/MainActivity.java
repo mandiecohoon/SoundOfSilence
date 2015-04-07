@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -75,7 +78,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		// Import UI before creating song
-		setTime((TextView) findViewById(R.id.songProgressTime));
+		time = (TextView) findViewById(R.id.songProgressTime);
 		debugger = (TextView) findViewById(R.id.debugger);
 		
 		// Create song
@@ -299,6 +302,10 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	public void gameOver() {
+		
+	}
+	
 	public void clearGuess() {
 		answer = new int[12];
 		guessAnswer = new int[12];
@@ -307,6 +314,34 @@ public class MainActivity extends Activity {
 		guessText.setText("");
 	}
 	
+	public static void startTimer(final Context c) {
+		new CountDownTimer(1000, 10) { //61000 to 10
+
+			     public void onTick(long millisUntilFinished) {
+			        time.setText(""+ millisUntilFinished / 1000);
+			     }
+
+			     public void onFinish() {
+			    	time.setText("Out of time!");
+			    	disableButtons();
+			    	
+			    	new AlertDialog.Builder(c)
+					.setTitle("Game Over")
+					.setMessage("Start again?")
+					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			       			@Override
+			       			public void onClick(DialogInterface arg0, int arg1) {
+			       				time.setText("Wooop!");
+			       			}
+			        	})
+			       .setNeutralButton("Cancel", null)
+			       .create()
+			       .show();
+			       
+			     }
+			 }.start();
+	}
+
 	public static void disableButtons() {
 		button11.setEnabled(false);
 		button12.setEnabled(false);
@@ -352,13 +387,5 @@ public class MainActivity extends Activity {
 		int id = item.getItemId();
 		
 		return super.onOptionsItemSelected(item);
-	}
-
-	public static TextView getTime() {
-		return time;
-	}
-
-	public void setTime(TextView time) {
-		this.time = time;
 	}
 }
