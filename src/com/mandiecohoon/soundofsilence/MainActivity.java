@@ -21,10 +21,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	// Import buttons
+	// Import buttons and text
 	private Button playButton;
 	private Button clearGuess;
-	private TextView guessText;
+	private static TextView guessText;
 	private TextView debugger;
 	private static TextView time;
 	
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 			//R.raw.glass_break
 	};
 	private int numberOfSoundIDs = soundIDs.length;
-	private int[] song = new int[10];
+	private int[] song = new int[12];
 	
 	// Sound buttons
 	private static Button button11;
@@ -67,13 +67,17 @@ public class MainActivity extends Activity {
 	private SparseIntArray soundMap;
 	
 	// Answer
-	private int[] answer = new int[12];
-	private int[] guessAnswer = new int[12];
-	private ArrayList<String> guessList = new ArrayList();
-	int guessIndex = 0;
+	private static int[] answer = new int[12];
+	private static int[] guessAnswer = new int[12];
+	private static ArrayList<String> guessList = new ArrayList();
+	static int guessIndex = 0;
 	
 	// Get context for alert dialog
 	private static Context context;
+	
+	// Levels
+	private static int level = 1;
+	private static int difficulty = level + 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +91,7 @@ public class MainActivity extends Activity {
 		debugger = (TextView) findViewById(R.id.debugger);
 		
 		// Create song
-		song = createSong(2);
+		song = createSong(difficulty);
 				
 		// Import UI after creating song
 		playButton = (Button) findViewById(R.id.play);
@@ -261,7 +265,7 @@ public class MainActivity extends Activity {
 		Random random = new Random();
 		String debugAnswer = "";
 		
-		for(int i = 0; i <= numberOfSounds; i++) {
+		for(int i = 0; i < numberOfSounds; i++) {
 			int randomNumber = random.nextInt(numberOfSoundIDs - 1);
 			soundList[i] = soundIDs[randomNumber];
 			answer[i] = randomNumber + 1;
@@ -277,42 +281,79 @@ public class MainActivity extends Activity {
 		for(int i = 0; i < answer.length; i++) {
 			if(answer[i] == guessAnswer[i]) {
 				// Answer is correct
+				Log.i("cAnswer", String.valueOf(guessAnswer[i]) + ", " + String.valueOf(answer[i]));
 			} else {
 				// An incorrect guess
+				Log.i("fAnswer", String.valueOf(guessAnswer[i]) + ", " + String.valueOf(answer[i]));
 				flag = false;
 			}
 		}
-		
+		// Winning game
 		if(flag) {
-			debugger.setText("it worked!");
+			debugger.setText("Winner");
 			Log.i("Answer", "Winner");
 			disableButtons();
+			new AlertDialog.Builder(context)
+			.setTitle("Correct!")
+			.setMessage("Move on to the next level?")
+			.setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+	       			@Override
+	       			public void onClick(DialogInterface arg0, int arg1) {
+	       				addLevel();
+	       				enableButtons();
+	       			}
+	        	})
+	       .create()
+	       .show();
 		}
 	}
 	
 	public void showCurrentGuess(int soundGuessed) {
 		String guessedText = "";
+		guessAnswer[guessIndex] = soundGuessed;
 		guessIndex++;
 		for(String guess : guessList) {
 			guessedText = guessedText + guess;
 			guessedText = guessedText + ", ";
 		}
 		guessText.setText(guessedText);
-		guessAnswer[guessIndex - 1] = soundGuessed;
 		checkAnswer();
 		Log.i("Guessed", guessedText);
 	}
 	
 	public void addLevel() {
-		
+		// highest difficulty
+		if(difficulty == 12) {
+			new AlertDialog.Builder(context)
+			.setTitle("WOW!")
+			.setMessage("You've won the game on the highest difficulty! You must be a master of memory! ...or named Derrian")
+			.setPositiveButton("Oh I am!", new DialogInterface.OnClickListener() {
+	       			@Override
+	       			public void onClick(DialogInterface arg0, int arg1) {
+	       				//do stuff?
+	       			}
+	        	})
+	       .create()
+	       .show();
+		} else {
+			level++;
+			difficulty++;
+			clearGuess();
+			createSong(difficulty);
+		}
 	}
 	
-	public void gameOver() {
-		
+	public static void gameOver() {
+		level = 1;
+		difficulty = level + 3;
+		answer = new int[12];
+		guessAnswer = new int[12];
+		guessList = new ArrayList();
+		guessIndex = 0;
+		guessText.setText("");
 	}
 	
 	public void clearGuess() {
-		answer = new int[12];
 		guessAnswer = new int[12];
 		guessList = new ArrayList();
 		guessIndex = 0;
@@ -329,11 +370,12 @@ public class MainActivity extends Activity {
 		    	disableButtons();
 		    	new AlertDialog.Builder(context)
 				.setTitle("Game Over")
-				.setMessage("Start again?")
+				.setMessage("New Game?")
 				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 		       			@Override
 		       			public void onClick(DialogInterface arg0, int arg1) {
 		       				time.setText("Wooop!");
+		       				gameOver();
 		       			}
 		        	})
 		       .setNeutralButton("Cancel", null)
