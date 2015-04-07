@@ -39,8 +39,9 @@ public final class R {
         public static final int button_row3_3=0x7f090013;
         public static final int button_row3_4=0x7f090014;
         public static final int clearGuess=0x7f090015;
+        public static final int debugger=0x7f090016;
         public static final int guessText=0x7f090003;
-        public static final int newbutton=0x7f090016;
+        public static final int newbutton=0x7f090017;
         public static final int play=0x7f090004;
         public static final int songProgress=0x7f090002;
         public static final int songProgressTime=0x7f090001;

@@ -216,4 +216,12 @@
         android:layout_row="6"
         android:text="@string/clearGuess_text" />
 
+    <TextView
+        android:id="@+id/debugger"
+        android:layout_column="0"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_row="6"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </GridLayout>

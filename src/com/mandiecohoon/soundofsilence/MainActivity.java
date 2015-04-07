@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Menu;
@@ -21,7 +22,8 @@ public class MainActivity extends Activity {
 	private Button playButton;
 	private Button clearGuess;
 	private TextView guessText;
-	private TextView test;
+	private TextView debugger;
+	private static TextView time;
 	
 	// Array of sounds MUST BE IN ORDER OF BUTTONS
 	private int[] soundIDs = {
@@ -71,16 +73,19 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		test = (TextView) findViewById(R.id.songProgressTime);
+		
+		// Import UI before creating song
+		setTime((TextView) findViewById(R.id.songProgressTime));
+		debugger = (TextView) findViewById(R.id.debugger);
+		
 		// Create song
 		song = createSong(2);
 				
-		// Import UI
+		// Import UI after creating song
 		playButton = (Button) findViewById(R.id.play);
 		playButton.setOnClickListener(playButtonListener);
 		clearGuess = (Button) findViewById(R.id.clearGuess);
 		clearGuess.setOnClickListener(clearGuessListener);
-		
 		guessText = (TextView) findViewById(R.id.guessText);
 		
 		// Clear data
@@ -122,6 +127,7 @@ public class MainActivity extends Activity {
 		 }
 	}
 	
+	// Play button
 	 public OnClickListener playButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -245,15 +251,16 @@ public class MainActivity extends Activity {
 	public int[] createSong(int numberOfSounds) {
 		int[] soundList = new int[numberOfSounds + 1];
 		Random random = new Random();
-		String one = "";
+		String debugAnswer = "";
 		
 		for(int i = 0; i <= numberOfSounds; i++) {
 			int randomNumber = random.nextInt(numberOfSoundIDs - 1);
 			soundList[i] = soundIDs[randomNumber];
 			answer[i] = randomNumber + 1;
-			one = one + " " + String.valueOf(answer[i]);
+			debugAnswer = debugAnswer + " " + String.valueOf(answer[i]);
 		}
-		test.setText(one);
+		debugger.setText(debugAnswer);
+		Log.i("Answer", debugAnswer);
 		return soundList;
 	}
 	
@@ -263,12 +270,14 @@ public class MainActivity extends Activity {
 			if(answer[i] == guessAnswer[i]) {
 				// Answer is correct
 			} else {
+				// An incorrect guess
 				flag = false;
 			}
 		}
 		
 		if(flag) {
-			test.setText("it worked!");
+			debugger.setText("it worked!");
+			Log.i("Answer", "Winner");
 			disableButtons();
 		}
 	}
@@ -283,7 +292,7 @@ public class MainActivity extends Activity {
 		guessText.setText(guessedText);
 		guessAnswer[guessIndex - 1] = soundGuessed;
 		checkAnswer();
-		Log.i("First answer", String.valueOf(answer[0]));
+		Log.i("Guessed", guessedText);
 	}
 	
 	public void addLevel() {
@@ -298,7 +307,7 @@ public class MainActivity extends Activity {
 		guessText.setText("");
 	}
 	
-	public void disableButtons() {
+	public static void disableButtons() {
 		button11.setEnabled(false);
 		button12.setEnabled(false);
 		button13.setEnabled(false);
@@ -343,5 +352,13 @@ public class MainActivity extends Activity {
 		int id = item.getItemId();
 		
 		return super.onOptionsItemSelected(item);
+	}
+
+	public static TextView getTime() {
+		return time;
+	}
+
+	public void setTime(TextView time) {
+		this.time = time;
 	}
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.util.Log;
 
 public class PlayMedia extends AsyncTask<Void, Void, Void> {
@@ -36,6 +37,17 @@ public class PlayMedia extends AsyncTask<Void, Void, Void> {
                     idx += 1;
                 } else if(soundIDs.length<=idx) {
                 	MainActivity.enableButtons();
+                	new CountDownTimer(61000, 10) {
+
+       			     public void onTick(long millisUntilFinished) {
+       			         MainActivity.getTime().setText(""+ millisUntilFinished / 1000);
+       			     }
+
+       			     public void onFinish() {
+       			    	MainActivity.getTime().setText("Out of time!");
+       			    	MainActivity.disableButtons();
+       			     }
+       			 }.start();
                 }           
             }
         });
