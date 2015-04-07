@@ -17,7 +17,7 @@
     <string name="toggle_row3_4">Air Wrench</string>
     <string name="button_play">Play</string>
     <string name="timer">1:00</string>
-    <string name="guess_text">Guess</string>
+    <string name="guess_text">Press play to start the game</string>
     <string name="clearGuess_text">Try Again</string>
     
 </resources>

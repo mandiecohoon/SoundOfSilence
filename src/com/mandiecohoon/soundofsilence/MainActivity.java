@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -25,11 +26,12 @@ public class MainActivity extends Activity {
 	private Button playButton;
 	private Button clearGuess;
 	private static TextView guessText;
-	private TextView debugger;
+	private static TextView debugger;
 	private static TextView time;
+	private static ProgressBar levelProgress;
 	
 	// Array of sounds MUST BE IN ORDER OF BUTTONS
-	private int[] soundIDs = {
+	private static int[] soundIDs = {
 			R.raw.blop,
 			R.raw.pindrop,
 			R.raw.shotgunreload,
@@ -46,8 +48,8 @@ public class MainActivity extends Activity {
 			//R.raw.mac_startup,
 			//R.raw.glass_break
 	};
-	private int numberOfSoundIDs = soundIDs.length;
-	private int[] song = new int[12];
+	private static int numberOfSoundIDs = soundIDs.length;
+	private static int[] song = new int[12];
 	
 	// Sound buttons
 	private static Button button11;
@@ -77,7 +79,7 @@ public class MainActivity extends Activity {
 	
 	// Levels
 	private static int level = 1;
-	private static int difficulty = level + 2;
+	private static int difficulty = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class MainActivity extends Activity {
 		clearGuess = (Button) findViewById(R.id.clearGuess);
 		clearGuess.setOnClickListener(clearGuessListener);
 		guessText = (TextView) findViewById(R.id.guessText);
+		levelProgress = (ProgressBar) findViewById(R.id.songProgress);
 		
 		// Clear data
 		//clearGuess();
@@ -260,13 +263,13 @@ public class MainActivity extends Activity {
 	};
 	
 	
-	public int[] createSong(int numberOfSounds) {
+	public static int[] createSong(int numberOfSounds) {
 		int[] soundList = new int[numberOfSounds + 1];
 		Random random = new Random();
 		String debugAnswer = "";
 		
-		for(int i = 0; i < numberOfSounds; i++) {
-			int randomNumber = random.nextInt(numberOfSoundIDs - 1);
+		for(int i = 0; i <= numberOfSounds; i++) {
+			int randomNumber = random.nextInt(numberOfSoundIDs);
 			soundList[i] = soundIDs[randomNumber];
 			answer[i] = randomNumber + 1;
 			debugAnswer = debugAnswer + " " + String.valueOf(answer[i]);
@@ -276,7 +279,7 @@ public class MainActivity extends Activity {
 		return soundList;
 	}
 	
-	public void checkAnswer() {
+	public static boolean checkAnswer() {
 		boolean flag = true;
 		for(int i = 0; i < answer.length; i++) {
 			if(answer[i] == guessAnswer[i]) {
@@ -301,17 +304,23 @@ public class MainActivity extends Activity {
 	       			public void onClick(DialogInterface arg0, int arg1) {
 	       				addLevel();
 	       				enableButtons();
+	       				stopTimer();
 	       			}
 	        	})
 	       .create()
 	       .show();
 		}
+		
+		return flag;
 	}
 	
 	public void showCurrentGuess(int soundGuessed) {
 		String guessedText = "";
 		guessAnswer[guessIndex] = soundGuessed;
 		guessIndex++;
+		if(guessIndex >= 12) {
+			clearGuess();
+		}
 		for(String guess : guessList) {
 			guessedText = guessedText + guess;
 			guessedText = guessedText + ", ";
@@ -321,16 +330,16 @@ public class MainActivity extends Activity {
 		Log.i("Guessed", guessedText);
 	}
 	
-	public void addLevel() {
+	public static void addLevel() {
 		// highest difficulty
-		if(difficulty == 12) {
+		if(difficulty == 11) {
 			new AlertDialog.Builder(context)
 			.setTitle("WOW!")
 			.setMessage("You've won the game on the highest difficulty! You must be a master of memory! ...or named Derrian")
 			.setPositiveButton("Oh I am!", new DialogInterface.OnClickListener() {
 	       			@Override
 	       			public void onClick(DialogInterface arg0, int arg1) {
-	       				//do stuff?
+	       				gameOver();
 	       			}
 	        	})
 	       .create()
@@ -339,13 +348,14 @@ public class MainActivity extends Activity {
 			level++;
 			difficulty++;
 			clearGuess();
-			createSong(difficulty);
+			//levelProgress.setProgress(level);
+			song = createSong(difficulty);
 		}
 	}
 	
 	public static void gameOver() {
 		level = 1;
-		difficulty = level + 3;
+		difficulty = 2;
 		answer = new int[12];
 		guessAnswer = new int[12];
 		guessList = new ArrayList();
@@ -353,7 +363,7 @@ public class MainActivity extends Activity {
 		guessText.setText("");
 	}
 	
-	public void clearGuess() {
+	public static void clearGuess() {
 		guessAnswer = new int[12];
 		guessList = new ArrayList();
 		guessIndex = 0;
@@ -361,29 +371,38 @@ public class MainActivity extends Activity {
 	}
 	
 	public static void startTimer() {
-		new CountDownTimer(1000, 10) { //61000 to 10
-		     public void onTick(long millisUntilFinished) {
-		        time.setText(""+ millisUntilFinished / 1000);
-		     }
-		     public void onFinish() {
-		    	time.setText("Out of time!");
-		    	disableButtons();
-		    	new AlertDialog.Builder(context)
-				.setTitle("Game Over")
-				.setMessage("New Game?")
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-		       			@Override
-		       			public void onClick(DialogInterface arg0, int arg1) {
-		       				time.setText("Wooop!");
-		       				gameOver();
-		       			}
-		        	})
-		       .setNeutralButton("Cancel", null)
-		       .create()
-		       .show();
-		     }
-		 }.start();
+		countDownTimer.start();
 	}
+	
+	public static void stopTimer() {
+		countDownTimer.cancel();
+		time.setText("1:00");
+	}
+	
+	// Timer
+	private static CountDownTimer countDownTimer = new CountDownTimer(61000, 10) { //61000 to 10 is default
+	     public void onTick(long millisUntilFinished) {
+	        time.setText(""+ millisUntilFinished / 1000);
+	        levelProgress.setProgress((int) (millisUntilFinished / 1000));
+	     }
+	     public void onFinish() {
+    		 time.setText("Out of time!");
+    		 disableButtons();
+    		 new AlertDialog.Builder(context)
+    		 .setTitle("Game Over")
+    		 .setMessage("New Game?")
+    		 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						time.setText("Wooop!");
+			   				gameOver();
+			   			}
+			    	})
+			 .setNeutralButton("Cancel", null)
+			 .create()
+			 .show();
+	     }
+	 };
 
 	public static void disableButtons() {
 		button11.setEnabled(false);
