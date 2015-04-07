@@ -70,6 +70,7 @@ public class MainActivity extends Activity {
 	private static Button button32;
 	private static Button button33;
 	private static Button button34;
+	
 	// Sounds
 	private SoundPool soundPool;
 	private SparseIntArray soundMap;
@@ -143,6 +144,7 @@ public class MainActivity extends Activity {
 		button34 = (Button) findViewById(R.id.button_row3_4);
 		button34.setOnClickListener(button34Listener);
 		
+		// sounds for when each sound button is pressed
 		 soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		 soundMap = new SparseIntArray(3);
 		 for(int i = 0; i < 12/*numberOfSoundIDs*/; i++) {
@@ -161,6 +163,7 @@ public class MainActivity extends Activity {
 		}
 	};
 	
+	// Try Again button
 	public OnClickListener clearGuessListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -271,12 +274,13 @@ public class MainActivity extends Activity {
 		}
 	};
 	
-	
+	// create the song from a set number of sounds
 	public static int[] createSong(int numberOfSounds) {
 		int[] soundList = new int[numberOfSounds + 1];
 		Random random = new Random();
 		String debugAnswer = "";
 		
+		// randomizes the sounds in the song
 		for(int i = 0; i <= numberOfSounds; i++) {
 			int randomNumber = random.nextInt(numberOfSoundIDs);
 			soundList[i] = soundIDs[randomNumber];
@@ -290,6 +294,8 @@ public class MainActivity extends Activity {
 	
 	public static boolean checkAnswer() {
 		boolean flag = true;
+		
+		// check if answer is fully correct - if yes: starts new level, if no: keeps going
 		for(int i = 0; i < answer.length; i++) {
 			if(answer[i] == guessAnswer[i]) {
 				// Answer is correct
@@ -306,6 +312,7 @@ public class MainActivity extends Activity {
 			Log.i("Answer", "Winner");
 			disableButtons();
 			score += 5 * (1 + timeProgress.getProgress());
+			// dialog to move to next level
 			new AlertDialog.Builder(context)
 			.setTitle("Correct!")
 			.setMessage("Move on to the next level?")
@@ -330,8 +337,10 @@ public class MainActivity extends Activity {
 		guessAnswer[guessIndex] = soundGuessed;
 		guessIndex++;
 		if(guessIndex >= 12) {
+			// catch for guesses to not go out of bounds
 			clearGuess();
 		}
+		// for ever guess in the guess list, add it to the string
 		for(String guess : guessList) {
 			guessedText = guessedText + guess;
 			guessedText = guessedText + ", ";
@@ -351,16 +360,17 @@ public class MainActivity extends Activity {
 			.setPositiveButton("Oh I am!", new DialogInterface.OnClickListener() {
 	       			@Override
 	       			public void onClick(DialogInterface arg0, int arg1) {
+	       				checkHighScore(score);
 	       				gameOver();
 	       			}
 	        	})
 	       .create()
 	       .show();
 		} else {
+			// increase level
 			level++;
 			difficulty++;
 			clearGuess();
-			//levelProgress.setProgress(level);
 			song = createSong(difficulty);
 		}
 	}
@@ -368,6 +378,7 @@ public class MainActivity extends Activity {
 	public static void gameOver() {
 		level = 1;
 		difficulty = 2;
+		score = 0;
 		answer = new int[12];
 		guessAnswer = new int[12];
 		guessList = new ArrayList();
@@ -398,24 +409,26 @@ public class MainActivity extends Activity {
 	        timeProgress.setProgress((int) (millisUntilFinished / 1000));
 	     }
 	     public void onFinish() {
+	    	 // Timer ran out of time
     		 time.setText("Out of time!");
     		 disableButtons();
+    		 checkHighScore(score);
+    		 // dialog to start new game
     		 new AlertDialog.Builder(context)
     		 .setTitle("Game Over")
     		 .setMessage("New Game?")
     		 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
-						time.setText("Wooop!");
+						time.setText("Start New Game");
 			   				gameOver();
-			   				checkHighScore(score);
 			   			}
 			    	})
 			 .create()
 			 .show();
 	     }
 	 };
-
+	 
 	public static void disableButtons() {
 		button11.setEnabled(false);
 		button12.setEnabled(false);
@@ -446,26 +459,31 @@ public class MainActivity extends Activity {
 		button34.setEnabled(true);
 	}
 	
+	// Check if score ranks top
 	private static void checkHighScore(int currentScore) {
-		SharedPreferences savedHighscores = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+		SharedPreferences savedHighscores = context.getSharedPreferences("highScorePref", Context.MODE_PRIVATE);
 		SharedPreferences.Editor preferencesEditor = savedHighscores.edit();
-	   
+		
+		// load previous high scores
 		for (int i = 0; i < 5; i++) {
-			highScoreList[i] = savedHighscores.getInt("hightScore" + String.valueOf(i), 0);
+			highScoreList[i] = savedHighscores.getInt("highScore" + String.valueOf(i), 0);
 		}
 	   
+		// insert current score and sort list
 		highScoreList[5] = currentScore;
 	    List<Integer>list = Ints.asList(highScoreList);
 	    Collections.sort(list, comparator);
 	    highScoreList = Ints.toArray(list);
 	   
+	    // re-orders high scores, dropping the last one
 	    for (int i = 0; i < 5; i++) {
-	    	preferencesEditor.putInt("hightScore" + String.valueOf(i), highScoreList[i]);
+	    	preferencesEditor.putInt("highScore" + String.valueOf(i), highScoreList[i]);
 	    }
 	    
 	    preferencesEditor.apply(); 
 	}
 	
+	// List comparator
 	static Comparator<Integer> comparator = new Comparator<Integer>() {
 		@Override
 		public int compare(Integer o1, Integer o2) {
@@ -473,13 +491,17 @@ public class MainActivity extends Activity {
 		}
 	};
 	
+	// Shows high score list in a dialog
 	private static void showHighScores() {
-		SharedPreferences savedHighscores = context.getSharedPreferences("pref", Context.MODE_PRIVATE);
-		String score1 = "" + savedHighscores.getInt("highscore0", 0);
-        String score2 = "" + savedHighscores.getInt("highscore1", 0);
-        String score3 = "" + savedHighscores.getInt("highscore2", 0);
-        String score4 = "" + savedHighscores.getInt("highscore3", 0);
-        String score5 = "" + savedHighscores.getInt("highscore4", 0);
+		// get scores from shared pref
+		SharedPreferences savedHighscores = context.getSharedPreferences("highScorePref", Context.MODE_PRIVATE);
+		String score1 = "" + savedHighscores.getInt("highScore0", 0);
+        String score2 = "" + savedHighscores.getInt("highScore1", 0);
+        String score3 = "" + savedHighscores.getInt("highScore2", 0);
+        String score4 = "" + savedHighscores.getInt("highScore3", 0);
+        String score5 = "" + savedHighscores.getInt("highScore4", 0);
+        
+        // create dialog with scores
         AlertDialog.Builder highScoreDialog = new AlertDialog.Builder(context);
         highScoreDialog.setTitle("High Scores");
         highScoreDialog.setMessage("1. " 
@@ -511,6 +533,8 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		
+		// If high score menu item is clicked it shows dialog
 		switch (id) {
 			case R.id.highScores:
 				showHighScores();
