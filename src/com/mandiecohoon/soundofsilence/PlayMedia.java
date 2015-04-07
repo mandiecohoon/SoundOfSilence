@@ -36,7 +36,7 @@ public class PlayMedia extends AsyncTask<Void, Void, Void> {
                     idx += 1;
                 } else if(soundIDs.length<=idx) {
                 	MainActivity.enableButtons();
-                	MainActivity.startTimer(context);
+                	MainActivity.startTimer();
                 }           
             }
         });

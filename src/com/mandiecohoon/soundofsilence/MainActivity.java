@@ -71,11 +71,16 @@ public class MainActivity extends Activity {
 	private int[] guessAnswer = new int[12];
 	private ArrayList<String> guessList = new ArrayList();
 	int guessIndex = 0;
+	
+	// Get context for alert dialog
+	private static Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		context = this;
 		
 		// Import UI before creating song
 		time = (TextView) findViewById(R.id.songProgressTime);
@@ -314,32 +319,28 @@ public class MainActivity extends Activity {
 		guessText.setText("");
 	}
 	
-	public static void startTimer(final Context c) {
+	public static void startTimer() {
 		new CountDownTimer(1000, 10) { //61000 to 10
-
-			     public void onTick(long millisUntilFinished) {
-			        time.setText(""+ millisUntilFinished / 1000);
-			     }
-
-			     public void onFinish() {
-			    	time.setText("Out of time!");
-			    	disableButtons();
-			    	
-			    	new AlertDialog.Builder(c)
-					.setTitle("Game Over")
-					.setMessage("Start again?")
-					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-			       			@Override
-			       			public void onClick(DialogInterface arg0, int arg1) {
-			       				time.setText("Wooop!");
-			       			}
-			        	})
-			       .setNeutralButton("Cancel", null)
-			       .create()
-			       .show();
-			       
-			     }
-			 }.start();
+		     public void onTick(long millisUntilFinished) {
+		        time.setText(""+ millisUntilFinished / 1000);
+		     }
+		     public void onFinish() {
+		    	time.setText("Out of time!");
+		    	disableButtons();
+		    	new AlertDialog.Builder(context)
+				.setTitle("Game Over")
+				.setMessage("Start again?")
+				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		       			@Override
+		       			public void onClick(DialogInterface arg0, int arg1) {
+		       				time.setText("Wooop!");
+		       			}
+		        	})
+		       .setNeutralButton("Cancel", null)
+		       .create()
+		       .show();
+		     }
+		 }.start();
 	}
 
 	public static void disableButtons() {
