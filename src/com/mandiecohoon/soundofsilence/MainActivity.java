@@ -45,13 +45,13 @@ public class MainActivity extends Activity {
 			R.raw.slap,
 			R.raw.turkey_gobble,
 			R.raw.ship_bell,
-			R.raw.cat_meow,
+			R.raw.mac_startup,
 			R.raw.duck,
 			R.raw.teaspoon,
-			R.raw.dove,
+			R.raw.hawk,
 			R.raw.air_wrench
-			//R.raw.hawk,
-			//R.raw.mac_startup,
+			//R.raw.duck,
+			//R.raw.dove,
 			//R.raw.glass_break
 	};
 	private static int numberOfSoundIDs = soundIDs.length;
