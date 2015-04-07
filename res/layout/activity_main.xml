@@ -116,7 +116,7 @@
                 android:id="@+id/button_row1_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/toggle_row1_2"
+                android:text="@string/toggle_row1_3"
                 android:textSize="12sp"
                 tools:ignore="ButtonStyle" />
 
@@ -124,7 +124,7 @@
                 android:id="@+id/button_row1_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/toggle_row1_3"
+                android:text="@string/toggle_row1_4"
                 android:textSize="12sp"
                 tools:ignore="ButtonStyle" />
 
@@ -147,7 +147,7 @@
                 android:id="@+id/button_row2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/toggle_row2_4"
+                android:text="@string/toggle_row2_2"
                 android:textSize="12sp"
                 tools:ignore="ButtonStyle" />
 
@@ -162,7 +162,7 @@
             <Button
                 android:id="@+id/button_row2_4"
                 android:layout_width="wrap_content"
-                android:text="@string/toggle_row2_2"
+                android:text="@string/toggle_row2_4"
                 android:textSize="12sp"
                 tools:ignore="ButtonStyle" />
 
@@ -177,7 +177,7 @@
                 android:id="@+id/button_row3_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/toggle_row3_4"
+                android:text="@string/toggle_row3_1"
                 android:textSize="12sp"
                 tools:ignore="ButtonStyle" />
 
@@ -201,7 +201,7 @@
                 android:id="@+id/button_row3_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/toggle_row3_1"
+                android:text="@string/toggle_row3_4"
                 android:textSize="12sp"
                 tools:ignore="ButtonStyle" />
 

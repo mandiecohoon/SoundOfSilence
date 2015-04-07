@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,16 +27,16 @@ public class MainActivity extends Activity {
 	private int[] soundIDs = {
 			R.raw.blop,
 			R.raw.pindrop,
-			R.raw.poolshoot,
 			R.raw.shotgunreload,
+			R.raw.poolshoot,
 			R.raw.slap,
-			R.raw.cat_meow,
-			R.raw.ship_bell,
 			R.raw.turkey_gobble,
-			R.raw.air_wrench,
+			R.raw.ship_bell,
+			R.raw.cat_meow,
+			R.raw.duck,
 			R.raw.teaspoon,
 			R.raw.dove,
-			R.raw.duck
+			R.raw.air_wrench
 			//R.raw.hawk,
 			//R.raw.mac_startup,
 			//R.raw.glass_break
@@ -83,7 +84,7 @@ public class MainActivity extends Activity {
 		guessText = (TextView) findViewById(R.id.guessText);
 		
 		// Clear data
-		clearGuess();
+		//clearGuess();
 		
 		// All the sound button choices
 		//row 1
@@ -282,6 +283,7 @@ public class MainActivity extends Activity {
 		guessText.setText(guessedText);
 		guessAnswer[guessIndex - 1] = soundGuessed;
 		checkAnswer();
+		Log.i("First answer", String.valueOf(answer[0]));
 	}
 	
 	public void addLevel() {
