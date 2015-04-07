@@ -1,12 +1,18 @@
 package com.mandiecohoon.soundofsilence;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
+
+import com.google.common.primitives.Ints;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -28,7 +34,7 @@ public class MainActivity extends Activity {
 	private static TextView guessText;
 	private static TextView debugger;
 	private static TextView time;
-	private static ProgressBar levelProgress;
+	private static ProgressBar timeProgress;
 	
 	// Array of sounds MUST BE IN ORDER OF BUTTONS
 	private static int[] soundIDs = {
@@ -77,9 +83,11 @@ public class MainActivity extends Activity {
 	// Get context for alert dialog
 	private static Context context;
 	
-	// Levels
+	// Levels & score
 	private static int level = 1;
 	private static int difficulty = 2;
+	private int highScoreList[] = new int[6];
+	private static int score;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +109,7 @@ public class MainActivity extends Activity {
 		clearGuess = (Button) findViewById(R.id.clearGuess);
 		clearGuess.setOnClickListener(clearGuessListener);
 		guessText = (TextView) findViewById(R.id.guessText);
-		levelProgress = (ProgressBar) findViewById(R.id.songProgress);
+		timeProgress = (ProgressBar) findViewById(R.id.songProgress);
 		
 		// Clear data
 		//clearGuess();
@@ -149,6 +157,7 @@ public class MainActivity extends Activity {
 			disableButtons();
 			PlayMedia playAudio = new PlayMedia(getBaseContext(), song);
 			playAudio.execute();
+			guessText.setText("Which sounds do you hear? You have a minute to guess!");
 		}
 	};
 	
@@ -296,6 +305,7 @@ public class MainActivity extends Activity {
 			debugger.setText("Winner");
 			Log.i("Answer", "Winner");
 			disableButtons();
+			score += 5 * (1 + timeProgress.getProgress());
 			new AlertDialog.Builder(context)
 			.setTitle("Correct!")
 			.setMessage("Move on to the next level?")
@@ -368,6 +378,7 @@ public class MainActivity extends Activity {
 		guessList = new ArrayList();
 		guessIndex = 0;
 		guessText.setText("");
+		score -= 2;
 	}
 	
 	public static void startTimer() {
@@ -383,7 +394,7 @@ public class MainActivity extends Activity {
 	private static CountDownTimer countDownTimer = new CountDownTimer(61000, 10) { //61000 to 10 is default
 	     public void onTick(long millisUntilFinished) {
 	        time.setText(""+ millisUntilFinished / 1000);
-	        levelProgress.setProgress((int) (millisUntilFinished / 1000));
+	        timeProgress.setProgress((int) (millisUntilFinished / 1000));
 	     }
 	     public void onFinish() {
     		 time.setText("Out of time!");
@@ -398,7 +409,6 @@ public class MainActivity extends Activity {
 			   				gameOver();
 			   			}
 			    	})
-			 .setNeutralButton("Cancel", null)
 			 .create()
 			 .show();
 	     }
@@ -434,6 +444,33 @@ public class MainActivity extends Activity {
 		button34.setEnabled(true);
 	}
 	
+	private void checkHighScore(int currentScore) {
+		SharedPreferences savedHighscores = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+		SharedPreferences.Editor preferencesEditor = savedHighscores.edit();
+	   
+		for (int i = 0; i < 5; i++) {
+			highScoreList[i] = savedHighscores.getInt("hightScore" + String.valueOf(i), 0);
+		}
+	   
+		highScoreList[5] = currentScore;
+	    List<Integer>list = Ints.asList(highScoreList);
+	    Collections.sort(list, comparator);
+	    highScoreList = Ints.toArray(list);
+	   
+	    for (int i = 0; i < 5; i++) {
+	    	preferencesEditor.putInt("hightScore" + String.valueOf(i), highScoreList[i]);
+	    }
+	    
+	    preferencesEditor.apply(); 
+	}
+	
+	Comparator<Integer> comparator = new Comparator<Integer>() {
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			return o2.compareTo(o1);
+		}
+	};
+	   
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
