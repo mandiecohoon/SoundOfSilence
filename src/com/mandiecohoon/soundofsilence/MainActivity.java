@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 	// Levels & score
 	private static int level = 1;
 	private static int difficulty = 2;
-	private int highScoreList[] = new int[6];
+	private static int highScoreList[] = new int[6];
 	private static int score;
 
 	@Override
@@ -315,6 +315,7 @@ public class MainActivity extends Activity {
 	       				addLevel();
 	       				enableButtons();
 	       				stopTimer();
+	       				timeProgress.setProgress(60);
 	       			}
 	        	})
 	       .create()
@@ -338,6 +339,7 @@ public class MainActivity extends Activity {
 		guessText.setText(guessedText);
 		checkAnswer();
 		Log.i("Guessed", guessedText);
+		debugger.setText(String.valueOf(score));
 	}
 	
 	public static void addLevel() {
@@ -378,7 +380,6 @@ public class MainActivity extends Activity {
 		guessList = new ArrayList();
 		guessIndex = 0;
 		guessText.setText("");
-		score -= 2;
 	}
 	
 	public static void startTimer() {
@@ -407,6 +408,7 @@ public class MainActivity extends Activity {
 					public void onClick(DialogInterface arg0, int arg1) {
 						time.setText("Wooop!");
 			   				gameOver();
+			   				checkHighScore(score);
 			   			}
 			    	})
 			 .create()
@@ -444,7 +446,7 @@ public class MainActivity extends Activity {
 		button34.setEnabled(true);
 	}
 	
-	private void checkHighScore(int currentScore) {
+	private static void checkHighScore(int currentScore) {
 		SharedPreferences savedHighscores = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
 		SharedPreferences.Editor preferencesEditor = savedHighscores.edit();
 	   
@@ -464,12 +466,37 @@ public class MainActivity extends Activity {
 	    preferencesEditor.apply(); 
 	}
 	
-	Comparator<Integer> comparator = new Comparator<Integer>() {
+	static Comparator<Integer> comparator = new Comparator<Integer>() {
 		@Override
 		public int compare(Integer o1, Integer o2) {
 			return o2.compareTo(o1);
 		}
 	};
+	
+	private static void showHighScores() {
+		SharedPreferences savedHighscores = context.getSharedPreferences("pref", Context.MODE_PRIVATE);
+		String score1 = "" + savedHighscores.getInt("highscore0", 0);
+        String score2 = "" + savedHighscores.getInt("highscore1", 0);
+        String score3 = "" + savedHighscores.getInt("highscore2", 0);
+        String score4 = "" + savedHighscores.getInt("highscore3", 0);
+        String score5 = "" + savedHighscores.getInt("highscore4", 0);
+        AlertDialog.Builder highScoreDialog = new AlertDialog.Builder(context);
+        highScoreDialog.setTitle("High Scores");
+        highScoreDialog.setMessage("1. " 
+	               + score1
+	               + "\n2. "
+	               + score2
+	               + "\n3. "
+	               + score3
+	               + "\n4. "
+	               + score4
+	               + "\n5. "
+	               + score5
+        	);
+        highScoreDialog.setPositiveButton("Okay", null);
+        highScoreDialog.create();
+        highScoreDialog.show();
+	}
 	   
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -484,7 +511,11 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
+		switch (id) {
+			case R.id.highScores:
+				showHighScores();
+				return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 }

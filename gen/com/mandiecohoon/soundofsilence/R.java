@@ -41,7 +41,7 @@ public final class R {
         public static final int clearGuess=0x7f090014;
         public static final int debugger=0x7f090015;
         public static final int guessText=0x7f090016;
-        public static final int newbutton=0x7f090017;
+        public static final int highScores=0x7f090017;
         public static final int play=0x7f090003;
         public static final int songProgress=0x7f090002;
         public static final int songProgressTime=0x7f090001;
@@ -80,7 +80,7 @@ public final class R {
         public static final int yahoo=0x7f040014;
     }
     public static final class string {
-        public static final int action_settings=0x7f060001;
+        public static final int action_highScores=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int button_play=0x7f06000e;
         public static final int clearGuess_text=0x7f060011;

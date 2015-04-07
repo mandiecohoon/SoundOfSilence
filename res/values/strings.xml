@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Sound Of Silence</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_highScores">High Scores</string>
     <string name="toggle_row1_1">Blop</string>
     <string name="toggle_row1_2">Pin Drop</string>
     <string name="toggle_row1_3">Reload</string>
