@@ -84,8 +84,7 @@ public class MainActivity extends Activity {
 	// Get context for alert dialog
 	private static Context context;
 	
-	// Levels & score
-	private static int level = 1;
+	// Difficulty & score
 	private static int difficulty = 2;
 	private static int highScoreList[] = new int[6];
 	private static int score;
@@ -156,6 +155,7 @@ public class MainActivity extends Activity {
 	 public OnClickListener playButtonListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			clearGuess();
 			disableButtons();
 			PlayMedia playAudio = new PlayMedia(getBaseContext(), song);
 			playAudio.execute();
@@ -287,7 +287,7 @@ public class MainActivity extends Activity {
 			answer[i] = randomNumber + 1;
 			debugAnswer = debugAnswer + " " + String.valueOf(answer[i]);
 		}
-		debugger.setText(debugAnswer);
+		//debugger.setText(debugAnswer);
 		Log.i("Answer", debugAnswer);
 		return soundList;
 	}
@@ -308,7 +308,7 @@ public class MainActivity extends Activity {
 		}
 		// Winning game
 		if(flag) {
-			debugger.setText("Winner");
+			//debugger.setText("Winner");
 			Log.i("Answer", "Winner");
 			disableButtons();
 			score += 5 * (1 + timeProgress.getProgress());
@@ -348,7 +348,7 @@ public class MainActivity extends Activity {
 		guessText.setText(guessedText);
 		checkAnswer();
 		Log.i("Guessed", guessedText);
-		debugger.setText(String.valueOf(score));
+		//debugger.setText(String.valueOf(score));
 	}
 	
 	public static void addLevel() {
@@ -367,8 +367,7 @@ public class MainActivity extends Activity {
 	       .create()
 	       .show();
 		} else {
-			// increase level
-			level++;
+			// increase level difficulty
 			difficulty++;
 			clearGuess();
 			song = createSong(difficulty);
@@ -376,7 +375,6 @@ public class MainActivity extends Activity {
 	}
 	
 	public static void gameOver() {
-		level = 1;
 		difficulty = 2;
 		score = 0;
 		answer = new int[12];
@@ -421,6 +419,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						time.setText("Start New Game");
+							enableButtons();
 			   				gameOver();
 			   			}
 			    	})
