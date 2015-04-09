@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	// Import buttons and text
-	private Button playButton;
+	private static Button playButton;
 	private Button clearGuess;
 	private static TextView guessText;
 	private static TextView debugger;
@@ -361,6 +361,7 @@ public class MainActivity extends Activity {
 	       			@Override
 	       			public void onClick(DialogInterface arg0, int arg1) {
 	       				checkHighScore(score);
+	       				playButton.setEnabled(true);
 	       				gameOver();
 	       			}
 	        	})
@@ -369,6 +370,7 @@ public class MainActivity extends Activity {
 		} else {
 			// increase level difficulty
 			difficulty++;
+			playButton.setEnabled(true);
 			clearGuess();
 			song = createSong(difficulty);
 		}
@@ -382,6 +384,7 @@ public class MainActivity extends Activity {
 		guessList = new ArrayList();
 		guessIndex = 0;
 		guessText.setText("");
+		song = createSong(difficulty);
 	}
 	
 	public static void clearGuess() {
@@ -418,8 +421,9 @@ public class MainActivity extends Activity {
     		 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
-						time.setText("Start New Game");
+						time.setText("Start New Game \n Your score was: " + score);
 							enableButtons();
+							playButton.setEnabled(true);
 			   				gameOver();
 			   			}
 			    	})
@@ -441,6 +445,7 @@ public class MainActivity extends Activity {
 		button32.setEnabled(false);
 		button33.setEnabled(false);
 		button34.setEnabled(false);
+		playButton.setEnabled(false);
 	}
 	
 	public static void enableButtons() {
