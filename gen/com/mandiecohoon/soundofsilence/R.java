@@ -26,6 +26,7 @@ public final class R {
     }
     public static final class id {
         public static final int GridLayout=0x7f090000;
+        public static final int GridLayout1=0x7f090017;
         public static final int button_row1_1=0x7f090006;
         public static final int button_row1_2=0x7f090007;
         public static final int button_row1_3=0x7f090008;
@@ -41,10 +42,13 @@ public final class R {
         public static final int clearGuess=0x7f090014;
         public static final int debugger=0x7f090015;
         public static final int guessText=0x7f090016;
-        public static final int highScores=0x7f090017;
+        public static final int highScores=0x7f09001b;
         public static final int play=0x7f090003;
         public static final int songProgress=0x7f090002;
         public static final int songProgressTime=0x7f090001;
+        public static final int splashContinue=0x7f090019;
+        public static final int splash_img=0x7f090018;
+        public static final int splash_title=0x7f09001a;
         public static final int table=0x7f090004;
         public static final int tableRow1=0x7f090005;
         public static final int tableRow2=0x7f09000a;
@@ -52,6 +56,7 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int activity_splash=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -85,6 +90,7 @@ public final class R {
         public static final int button_play=0x7f06000e;
         public static final int clearGuess_text=0x7f060011;
         public static final int guess_text=0x7f060010;
+        public static final int splash_start=0x7f060012;
         public static final int timer=0x7f06000f;
         public static final int toggle_row1_1=0x7f060002;
         public static final int toggle_row1_2=0x7f060003;
